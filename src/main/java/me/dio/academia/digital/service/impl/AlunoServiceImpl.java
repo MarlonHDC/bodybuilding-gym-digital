@@ -2,10 +2,12 @@ package me.dio.academia.digital.service.impl;
 
 import me.dio.academia.digital.entity.Aluno;
 import me.dio.academia.digital.entity.AvaliacaoFisica;
+import me.dio.academia.digital.entity.Matricula;
 import me.dio.academia.digital.entity.form.AlunoForm;
 import me.dio.academia.digital.entity.form.AlunoUpdateForm;
 import me.dio.academia.digital.infra.utils.JavaTimeUtils;
 import me.dio.academia.digital.repository.AlunoRepository;
+import me.dio.academia.digital.repository.MatriculaRepository;
 import me.dio.academia.digital.service.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Autowired
     private AlunoRepository repository;
+    @Autowired
+    private MatriculaRepository matriculaRepository;
 
     @Override
     public Aluno create(AlunoForm form) {
@@ -56,13 +60,15 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public Aluno update(Long id, AlunoUpdateForm formUpdate) {
-        return null;
+
+        return repository.getById(id);
     }
 
 
     @Override
     public void delete(Long id) {
-        repository.existsById (id);
+        Matricula matricula = matriculaRepository.getByAluno_id(id);
+        matriculaRepository.deleteById(matricula.getId());
         repository.deleteById(id);
         }
 

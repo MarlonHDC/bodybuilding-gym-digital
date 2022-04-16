@@ -24,8 +24,6 @@ public class MatriculaServiceImpl implements IMatriculaService {
         Matricula matricula = new Matricula();
         Aluno aluno = alunoRepository.findById(form.getAlunoId()).get();
 
-        matricula.setAluno(aluno);
-
         return matriculaRepository.save(matricula);
     }
 
